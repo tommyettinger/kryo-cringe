@@ -30,6 +30,9 @@ import com.github.tommyettinger.kryo.gdx.ArraySerializer;
  * Needs {@link ArraySerializer} to be registered for {@link Array},
  * the concrete subclass of {@link GdxRandom} registered, and
  * the type of whatever items are in the GapShuffler registered.
+ * You can register a different ArraySerializer if you have one already,
+ * such as the ArraySerializer from kryo-libgdx, but only one serializer
+ * can be registered for the Array type.
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class GapShufflerSerializer extends Serializer<GapShuffler> {

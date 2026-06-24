@@ -29,6 +29,9 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
 /** Serializes libGDX {@link Array} objects.
+ * Note that if you use kryo-libgdx, you should not register this ArraySerializer in addition to that library's
+ * ArraySerializer; you should only register that library's ArraySerializer, normally.
+ *
  * @author Nathan Sweet */
 public class ArraySerializer extends Serializer<Array> {
 	private boolean elementsCanBeNull = true;
