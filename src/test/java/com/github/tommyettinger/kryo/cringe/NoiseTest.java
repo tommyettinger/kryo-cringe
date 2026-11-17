@@ -435,6 +435,72 @@ public class NoiseTest {
     }
 
     @Test
+    public void testWangPerlinNoise() {
+        Kryo kryo = new Kryo();
+        WangPerlinNoiseSerializer ser = new WangPerlinNoiseSerializer();
+        kryo.register(WangPerlinNoise.class, ser);
+
+        WangPerlinNoise data = new WangPerlinNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            WangPerlinNoise data2 = kryo.readObject(input, WangPerlinNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f), data2.getNoise(1.1f, 2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f), data2.getNoise(1.1f, 2.2f, -3.3f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), 0.00001f);
+            Assert.assertEquals(data, data2);
+        }
+    }
+
+    @Test
+    public void testWangPerlueNoise() {
+        Kryo kryo = new Kryo();
+        WangPerlueNoiseSerializer ser = new WangPerlueNoiseSerializer();
+        kryo.register(WangPerlueNoise.class, ser);
+
+        WangPerlueNoise data = new WangPerlueNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            WangPerlueNoise data2 = kryo.readObject(input, WangPerlueNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f), data2.getNoise(1.1f, 2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f), data2.getNoise(1.1f, 2.2f, -3.3f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), 0.00001f);
+            Assert.assertEquals(data, data2);
+        }
+    }
+
+    @Test
+    public void testWangValueNoise() {
+        Kryo kryo = new Kryo();
+        WangValueNoiseSerializer ser = new WangValueNoiseSerializer();
+        kryo.register(WangValueNoise.class, ser);
+
+        WangValueNoise data = new WangValueNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            WangValueNoise data2 = kryo.readObject(input, WangValueNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f), data2.getNoise(1.1f, 2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f), data2.getNoise(1.1f, 2.2f, -3.3f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), 0.00001f);
+            Assert.assertEquals(data, data2);
+        }
+    }
+
+    @Test
     public void testWangRawNoise() {
         Kryo kryo = new Kryo();
         WangRawNoiseSerializer ser = new WangRawNoiseSerializer();
@@ -452,7 +518,7 @@ public class NoiseTest {
             Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f), 0.00001f);
             Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), 0.00001f);
             Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), 0.00001f);
-            Assert.assertEquals(data.getSeed(), data2.getSeed());
+            Assert.assertEquals(data, data2);
         }
     }
 
