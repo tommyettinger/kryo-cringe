@@ -8,7 +8,7 @@ Use JitPack.io as your repository (which gdx-liftoff projects already can do) an
 implementation "com.github.tommyettinger:kryo-cringe:0.3.2.2"
 ```
 
-This depends on Kryo 5.6.2 and libGDX 1.14.2 .
+This depends on cringe 0.3.2, Kryo 5.6.2, and libGDX 1.14.2 .
 
 ## Older Versions
 
