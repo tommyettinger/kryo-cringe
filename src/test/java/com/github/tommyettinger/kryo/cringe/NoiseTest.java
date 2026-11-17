@@ -21,6 +21,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.github.tommyettinger.cringe.*;
+import com.github.tommyettinger.cringe.LineWobble.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -287,6 +288,126 @@ public class NoiseTest {
             Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), 0.00001f);
             Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), 0.00001f);
             Assert.assertEquals(data, data2);
+        }
+    }
+
+    @Test
+    public void testBicubicWobbleNoise() {
+        Kryo kryo = new Kryo();
+        BicubicWobbleNoiseSerializer ser = new BicubicWobbleNoiseSerializer();
+        kryo.register(BicubicWobbleNoise.class, ser);
+
+        BicubicWobbleNoise data = new BicubicWobbleNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            BicubicWobbleNoise data2 = kryo.readObject(input, BicubicWobbleNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f), data2.getNoise(1.1f), 0.00001f);
+            Assert.assertEquals(data.getNoise(2.2f), data2.getNoise(2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(-3.3f), data2.getNoise(-3.3f), 0.00001f);
+            Assert.assertEquals(data.seed, data2.seed);
+        }
+    }
+
+    @Test
+    public void testSmoothWobbleNoise() {
+        Kryo kryo = new Kryo();
+        SmoothWobbleNoiseSerializer ser = new SmoothWobbleNoiseSerializer();
+        kryo.register(SmoothWobbleNoise.class, ser);
+
+        SmoothWobbleNoise data = new SmoothWobbleNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            SmoothWobbleNoise data2 = kryo.readObject(input, SmoothWobbleNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f), data2.getNoise(1.1f), 0.00001f);
+            Assert.assertEquals(data.getNoise(2.2f), data2.getNoise(2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(-3.3f), data2.getNoise(-3.3f), 0.00001f);
+            Assert.assertEquals(data.seed, data2.seed);
+        }
+    }
+
+    @Test
+    public void testSplineWobbleNoise() {
+        Kryo kryo = new Kryo();
+        SplineWobbleNoiseSerializer ser = new SplineWobbleNoiseSerializer();
+        kryo.register(SplineWobbleNoise.class, ser);
+
+        SplineWobbleNoise data = new SplineWobbleNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            SplineWobbleNoise data2 = kryo.readObject(input, SplineWobbleNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f), data2.getNoise(1.1f), 0.00001f);
+            Assert.assertEquals(data.getNoise(2.2f), data2.getNoise(2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(-3.3f), data2.getNoise(-3.3f), 0.00001f);
+            Assert.assertEquals(data.seed, data2.seed);
+        }
+    }
+
+    @Test
+    public void testTrigWobbleNoise() {
+        Kryo kryo = new Kryo();
+        TrigWobbleNoiseSerializer ser = new TrigWobbleNoiseSerializer();
+        kryo.register(TrigWobbleNoise.class, ser);
+
+        TrigWobbleNoise data = new TrigWobbleNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            TrigWobbleNoise data2 = kryo.readObject(input, TrigWobbleNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f), data2.getNoise(1.1f), 0.00001f);
+            Assert.assertEquals(data.getNoise(2.2f), data2.getNoise(2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(-3.3f), data2.getNoise(-3.3f), 0.00001f);
+            Assert.assertEquals(data.seed, data2.seed);
+        }
+    }
+
+    @Test
+    public void testWobbleNoise() {
+        Kryo kryo = new Kryo();
+        WobbleNoiseSerializer ser = new WobbleNoiseSerializer();
+        kryo.register(WobbleNoise.class, ser);
+
+        WobbleNoise data = new WobbleNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            WobbleNoise data2 = kryo.readObject(input, WobbleNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f), data2.getNoise(1.1f), 0.00001f);
+            Assert.assertEquals(data.getNoise(2.2f), data2.getNoise(2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(-3.3f), data2.getNoise(-3.3f), 0.00001f);
+            Assert.assertEquals(data.seed, data2.seed);
+        }
+    }
+    
+    @Test
+    public void testRawWobbleNoise() {
+        Kryo kryo = new Kryo();
+        RawWobbleNoiseSerializer ser = new RawWobbleNoiseSerializer();
+        kryo.register(RawWobbleNoise.class, ser);
+
+        RawWobbleNoise data = new BicubicWobbleNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            RawWobbleNoise data2 = kryo.readObject(input, RawWobbleNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f), data2.getNoise(1.1f), 0.00001f);
+            Assert.assertEquals(data.getNoise(2.2f), data2.getNoise(2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(-3.3f), data2.getNoise(-3.3f), 0.00001f);
+            Assert.assertEquals(data.seed, data2.seed);
         }
     }
 
