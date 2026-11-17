@@ -433,4 +433,50 @@ public class NoiseTest {
             Assert.assertEquals(data, data2);
         }
     }
+
+    @Test
+    public void testWangRawNoise() {
+        Kryo kryo = new Kryo();
+        WangRawNoiseSerializer ser = new WangRawNoiseSerializer();
+        kryo.register(WangRawNoise.class, ser);
+
+        WangRawNoise data = new WangValueNoise(-12345);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            WangRawNoise data2 = kryo.readObject(input, WangRawNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f), data2.getNoise(1.1f, 2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f), data2.getNoise(1.1f, 2.2f, -3.3f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), 0.00001f);
+            Assert.assertEquals(data.getSeed(), data2.getSeed());
+        }
+    }
+
+    @Test
+    public void testWangContinuousNoise() {
+        Kryo kryo = new Kryo();
+        kryo.register(WangPerlinNoise.class, new WangPerlinNoiseSerializer());
+        WangContinuousNoiseSerializer ser = new WangContinuousNoiseSerializer();
+        kryo.register(WangContinuousNoise.class, ser);
+
+        WangContinuousNoise data = new WangContinuousNoise(new WangPerlinNoise(-12345), 1.4f, WangContinuousNoise.RIDGED, 4);
+        data.setTileSize(256);
+
+        Output output = new Output(32, -1);
+        kryo.writeObject(output, data, ser);
+        byte[] bytes = output.toBytes();
+        try (Input input = new Input(bytes)) {
+            WangContinuousNoise data2 = kryo.readObject(input, WangContinuousNoise.class);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f), data2.getNoise(1.1f, 2.2f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f), data2.getNoise(1.1f, 2.2f, -3.3f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f), 0.00001f);
+            Assert.assertEquals(data.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), data2.getNoise(1.1f, 2.2f, -3.3f, -4.4f, 5.5f, 6.6f), 0.00001f);
+            Assert.assertEquals(data, data2);
+        }
+    }
 }
